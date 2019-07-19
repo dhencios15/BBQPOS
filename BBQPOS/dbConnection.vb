@@ -20,7 +20,7 @@ Module dbConnection
         End Try
     End Sub
 
-    Public Sub SQLProcess(ByVal SQL As String)
+    Public Sub SQLProcess(ByVal SQL As String) ' SQL process for insert, delete, update
         Try
             dbConn.Open()
             sqlCommand = New SQLiteCommand(SQL, dbConn)
@@ -37,7 +37,7 @@ Module dbConnection
         End Try
     End Sub
 
-    Public Sub displayRecords(ByVal SQL As String, ByVal DG As DataGridView)
+    Public Sub displayRecords(ByVal SQL As String, ByVal DG As DataGridView) ' Display all values in the datagrid
         Try
             dbConn.Open()
             da = New SQLiteDataAdapter(SQL, dbConn)
@@ -46,6 +46,74 @@ Module dbConnection
             DG.DataSource = dt
         Catch ex As Exception
             MessageBox.Show("Error 102: displayRecords" & ex.Message)
+        Finally
+            dbConn.Close()
+        End Try
+    End Sub
+
+    Public Function isFound(ByVal SQL As String, ByVal name As String) As Boolean ' Check if value found in database
+        Dim value = ""
+        Dim found = False
+        Try
+            dbConn.Open()
+            da = New SQLiteDataAdapter(SQL, dbConn)
+            dt = New DataTable
+            da.Fill(dt)
+
+            For Each row As DataRow In dt.Rows
+                value = row.Item("username")
+                If value = name Then
+                    found = True
+                    Exit For
+                End If
+            Next
+        Catch ex As Exception
+            MessageBox.Show("Error 106: isFound" & ex.Message)
+        Finally
+            dbConn.Close()
+        End Try
+        Return found
+    End Function
+
+    Public Function isFound(ByVal SQL As String, ByVal name As String, ByVal password As String) As Boolean ' check username and password
+
+        Dim value = "", add = ""
+        Dim found = False
+        Try
+            dbConn.Open()
+            da = New SQLiteDataAdapter(SQL, dbConn)
+            dt = New DataTable
+            da.Fill(dt)
+
+            For Each row As DataRow In dt.Rows
+                value = row.Item("username")
+                add = row.Item("password")
+
+                If value = name And add = password Then
+                    found = True
+                    Exit For
+                End If
+            Next
+        Catch ex As Exception
+            MessageBox.Show("Error 104: isFound" & ex.Message)
+        Finally
+            dbConn.Close()
+        End Try
+        Return found
+    End Function
+
+    Public Sub loadToComboBox(ByVal SQL As String, ByVal cbo As ComboBox) ' Load all values into combobox
+        Try
+            dbConn.Open()
+            da = New SQLiteDataAdapter(SQL, dbConn)
+            dt = New DataTable
+            da.Fill(dt)
+            cbo.DataSource = dt
+            cbo.ValueMember = dt.Columns(0).ToString
+            cbo.DisplayMember = dt.Columns(1).ToString
+
+        Catch ex As Exception
+            MessageBox.Show("Error 105: Db_ComboxDisplay" & ex.Message)
         Finally
             dbConn.Close()
         End Try

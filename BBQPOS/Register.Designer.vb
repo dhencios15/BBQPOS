@@ -30,11 +30,13 @@ Partial Class Register
         Me.txtUsername = New System.Windows.Forms.TextBox()
         Me.btnConfirm = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtName = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.txtContact = New System.Windows.Forms.TextBox()
+        Me.cmbGender = New System.Windows.Forms.ComboBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtPassword2 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'btnClose
@@ -103,7 +105,7 @@ Partial Class Register
         Me.btnConfirm.BackColor = System.Drawing.Color.FromArgb(CType(CType(39, Byte), Integer), CType(CType(174, Byte), Integer), CType(CType(96, Byte), Integer))
         Me.btnConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnConfirm.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnConfirm.Location = New System.Drawing.Point(117, 318)
+        Me.btnConfirm.Location = New System.Drawing.Point(117, 375)
         Me.btnConfirm.Name = "btnConfirm"
         Me.btnConfirm.Size = New System.Drawing.Size(75, 23)
         Me.btnConfirm.TabIndex = 8
@@ -117,17 +119,17 @@ Partial Class Register
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(76, 78)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(77, 15)
+        Me.Label4.Size = New System.Drawing.Size(49, 15)
         Me.Label4.TabIndex = 15
-        Me.Label4.Text = "Username:"
+        Me.Label4.Text = "Name:"
         '
-        'TextBox1
+        'txtName
         '
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(79, 96)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(148, 26)
-        Me.TextBox1.TabIndex = 14
+        Me.txtName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtName.Location = New System.Drawing.Point(79, 96)
+        Me.txtName.Name = "txtName"
+        Me.txtName.Size = New System.Drawing.Size(148, 26)
+        Me.txtName.TabIndex = 14
         '
         'Label5
         '
@@ -136,17 +138,9 @@ Partial Class Register
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(76, 125)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(77, 15)
+        Me.Label5.Size = New System.Drawing.Size(58, 15)
         Me.Label5.TabIndex = 17
-        Me.Label5.Text = "Username:"
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(79, 143)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(148, 26)
-        Me.TextBox2.TabIndex = 16
+        Me.Label5.Text = "Gender:"
         '
         'Label6
         '
@@ -155,30 +149,61 @@ Partial Class Register
         Me.Label6.ForeColor = System.Drawing.Color.White
         Me.Label6.Location = New System.Drawing.Point(76, 174)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(77, 15)
+        Me.Label6.Size = New System.Drawing.Size(59, 15)
         Me.Label6.TabIndex = 19
-        Me.Label6.Text = "Username:"
+        Me.Label6.Text = "Contact:"
         '
-        'TextBox3
+        'txtContact
         '
-        Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.Location = New System.Drawing.Point(79, 192)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(148, 26)
-        Me.TextBox3.TabIndex = 18
+        Me.txtContact.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtContact.Location = New System.Drawing.Point(79, 192)
+        Me.txtContact.Name = "txtContact"
+        Me.txtContact.Size = New System.Drawing.Size(148, 26)
+        Me.txtContact.TabIndex = 18
+        '
+        'cmbGender
+        '
+        Me.cmbGender.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbGender.FormattingEnabled = True
+        Me.cmbGender.Location = New System.Drawing.Point(79, 143)
+        Me.cmbGender.Name = "cmbGender"
+        Me.cmbGender.Size = New System.Drawing.Size(148, 28)
+        Me.cmbGender.TabIndex = 20
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.White
+        Me.Label7.Location = New System.Drawing.Point(76, 312)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(127, 15)
+        Me.Label7.TabIndex = 22
+        Me.Label7.Text = "Confirm Password:"
+        '
+        'txtPassword2
+        '
+        Me.txtPassword2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPassword2.Location = New System.Drawing.Point(79, 330)
+        Me.txtPassword2.Name = "txtPassword2"
+        Me.txtPassword2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtPassword2.Size = New System.Drawing.Size(148, 26)
+        Me.txtPassword2.TabIndex = 21
         '
         'Register
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(94, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(302, 380)
+        Me.ClientSize = New System.Drawing.Size(302, 423)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.txtPassword2)
+        Me.Controls.Add(Me.cmbGender)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.TextBox3)
+        Me.Controls.Add(Me.txtContact)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
@@ -203,9 +228,11 @@ Partial Class Register
     Friend WithEvents txtUsername As TextBox
     Friend WithEvents btnConfirm As Button
     Friend WithEvents Label4 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtName As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents TextBox2 As TextBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents txtContact As TextBox
+    Friend WithEvents cmbGender As ComboBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents txtPassword2 As TextBox
 End Class
