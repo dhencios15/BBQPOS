@@ -11,15 +11,16 @@
     End Sub
 
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        If isFound("SELECT * FROM employee", txtUsername.Text, txtPassword.Text) Then
-            MessageBox.Show("Login successful")
-            'User_Login = txtUsername.Text
-            Main.Show()
-            Me.Hide()
-            reset()
-        Else
-            MessageBox.Show("Login failed")
-        End If
+        Main.Show()
+        'If isFound("SELECT * FROM employee", txtUsername.Text, txtPassword.Text) Then
+        '    MessageBox.Show("Login successful")
+        '    'User_Login = txtUsername.Text
+        '    Main.Show()
+        '    Me.Hide()
+        '    reset()
+        'Else
+        '    MessageBox.Show("Login failed")
+        'End If
     End Sub
 
     Sub reset()
