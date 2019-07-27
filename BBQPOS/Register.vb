@@ -24,7 +24,7 @@
                     txtPassword2.Text = ""
                     MsgBox("Register Success")
 
-                    Me.Hide()
+                    Me.Close()
                     Form1.Show()
                 Else
                     MsgBox("Password not match")
@@ -36,6 +36,7 @@
     End Sub
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
+        Form1.Show()
     End Sub
 
 

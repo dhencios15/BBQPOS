@@ -7,20 +7,20 @@
     End Sub
 
     Private Sub BtnRegister_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
-        Register.ShowDialog()
+        Register.Show()
+        Me.Hide()
     End Sub
 
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Main.Show()
-        'If isFound("SELECT * FROM employee", txtUsername.Text, txtPassword.Text) Then
-        '    MessageBox.Show("Login successful")
-        '    'User_Login = txtUsername.Text
-        '    Main.Show()
-        '    Me.Hide()
-        '    reset()
-        'Else
-        '    MessageBox.Show("Login failed")
-        'End If
+        If isFound("select * from employee", txtUsername.Text, txtPassword.Text) Then
+            MessageBox.Show("login successful")
+            User_Login = txtUsername.Text
+            Main.Show()
+            Me.Hide()
+            reset()
+        Else
+            MessageBox.Show("login failed")
+        End If
     End Sub
 
     Sub reset()
