@@ -10,7 +10,6 @@
         Register.Show()
         Me.Hide()
     End Sub
-
     Private Sub BtnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         If isFound("select * from employee", txtUsername.Text, txtPassword.Text) Then
             MessageBox.Show("login successful")

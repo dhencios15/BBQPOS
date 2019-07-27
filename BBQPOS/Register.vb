@@ -4,8 +4,6 @@
     Private Sub Register_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         loadToComboBox("SELECT * FROM gender", cmbGender)
     End Sub
-
-
     Private Sub BtnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
         Try
             If txtUsername.Text = "" Or txtName.Text = "" Or txtContact.Text = "" Or txtPassword.Text = "" Then
