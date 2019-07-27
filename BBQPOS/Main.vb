@@ -113,7 +113,7 @@
         End Try
 
         strQuery = "SELECT f.food_id As ID, f.food_name As Name, o.quantity As Quantity, o.sub_total As Subtotal, " _
-                & "m.emp_name As Issued_by FROM orders o INNER JOIN food f ON o.food_id = f.food_id INNER JOIN menu m ON m.menu_id = o.menu_id " _
+                & "m.emp_name As Menu_by FROM orders o INNER JOIN food f ON o.food_id = f.food_id INNER JOIN menu m ON m.menu_id = o.menu_id " _
                 & "WHERE o.order_id = " & order_id & " GROUP BY f.food_name"
         displayRecords(strQuery, DGReports)
     End Sub
@@ -189,7 +189,7 @@
     Private Sub TxtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
         'displayRecords("SELECT order_id As Order_ID, item_sold As Total_items, total_price As Total_amount, payment_made As Datetime, issued_by As Issued_by FROM payment ORDER BY payment_made DESC", DGReports)
         Try
-            strQuery = "Select * FROM report_display WHERE Order_ID LIKE '%" & txtSearch.Text & "%'"
+            strQuery = "Select * FROM report_display WHERE Order_ID LIKE '%" & txtSearch.Text & "%' OR Datetime LIKE '%" & txtSearch.Text & "%'"
             displayRecords(strQuery, DGReports)
         Catch ex As Exception
             MsgBox("ERROR ON TXTSEARCH PRODUCTS")
@@ -421,7 +421,7 @@
                     End If
                 Next
                 Try
-                    queryforpayment = "insert into payment values(null," & orderid & ", ( select sum(quantity) from orders where order_id = " & orderid & "), ( select sum(sub_total) from orders where order_id = " & orderid & "), datetime('now'),'" & lblCashier.Text & "')"
+                    queryforpayment = "insert into payment values(null," & orderid & ", ( select sum(quantity) from orders where order_id = " & orderid & "), ( select sum(sub_total) from orders where order_id = " & orderid & "), datetime('now','localtime'),'" & lblCashier.Text & "')"
                     SQLProcess(queryforpayment)
                     lblTransNumber.Text = generateOrderId()
                     DGOrders.Rows.Clear()
@@ -583,7 +583,17 @@
         btnAddMenu.Enabled = False
     End Sub
 
+    Private Sub txtServeMenu_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtServeMenu.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
 
+    Private Sub txtPrice_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtPrice.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
 
     Sub addMenu()
         strQuery = "SELECT f.food_id As ID, f.food_name As Name, f.description As Description,  m.quantity As Quantity, m.food_price As Price" _
