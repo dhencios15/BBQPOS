@@ -15,6 +15,7 @@
         addToCart()
         lblTotal.Text = totalOrder()
         lblTotalItem.Text = totalItem()
+        lblTotalSales.Text = totalSales()
     End Sub
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -81,8 +82,12 @@
         purchase()
     End Sub
 
-    Private Sub BtnReports_Click(sender As Object, e As EventArgs) Handles btnReports.Click
+    Private Sub BtnOks_Click(sender As Object, e As EventArgs) Handles btnOks.Click
+        lblTotalSales.Text = totalSales()
+    End Sub
 
+    Private Sub BtnReports_Click(sender As Object, e As EventArgs) Handles btnReports.Click
+        btnOks.Enabled = True
         DGActivityLog.Visible = False
         DGReports.Visible = True
         displayRecords("Select * FROM report_display", DGReports)
@@ -92,6 +97,7 @@
 
     Private Sub BtnActivityLog_Click(sender As Object, e As EventArgs) Handles btnActivityLog.Click
 
+        btnOks.Enabled = False
         DGActivityLog.Visible = True
         DGReports.Visible = False
 
@@ -108,14 +114,16 @@
                 ' Reports Fields
                 order_id = .Item("Order_ID", i).Value
             End With
-        Catch ex As Exception
-            MsgBox("CellClick Error: Reports" & ex.Message)
-        End Try
 
-        strQuery = "SELECT f.food_id As ID, f.food_name As Name, o.quantity As Quantity, o.sub_total As Subtotal, " _
+            strQuery = "SELECT f.food_id As ID, f.food_name As Name, o.sub_total As Subtotal, o.quantity As Quantity,  " _
                 & "m.emp_name As Menu_by FROM orders o INNER JOIN food f ON o.food_id = f.food_id INNER JOIN menu m ON m.menu_id = o.menu_id " _
                 & "WHERE o.order_id = " & order_id & " GROUP BY f.food_name"
-        displayRecords(strQuery, DGReports)
+            displayRecords(strQuery, DGReports)
+        Catch ex As Exception
+            MsgBox("You cant double click here.")
+        End Try
+
+
     End Sub
 
     Private Sub DGMenu_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGMenu.CellDoubleClick
@@ -191,6 +199,7 @@
         Try
             strQuery = "Select * FROM report_display WHERE Order_ID LIKE '%" & txtSearch.Text & "%' OR Datetime LIKE '%" & txtSearch.Text & "%'"
             displayRecords(strQuery, DGReports)
+            lblTotalSales.Text = totalSales()
         Catch ex As Exception
             MsgBox("ERROR ON TXTSEARCH PRODUCTS")
         End Try
@@ -223,6 +232,16 @@
         For Each row As DataGridViewRow In DGOrders.Rows
             If Not row.IsNewRow Then
                 total += CDbl(row.Cells(3).Value)
+            End If
+        Next
+        Return total
+    End Function
+
+    Public Function totalSales()
+        Dim total As Double = 0
+        For Each row As DataGridViewRow In DGReports.Rows
+            If Not row.IsNewRow Then
+                total += CDbl(row.Cells(2).Value)
             End If
         Next
         Return total
@@ -594,6 +613,8 @@
             e.Handled = True
         End If
     End Sub
+
+
 
     Sub addMenu()
         strQuery = "SELECT f.food_id As ID, f.food_name As Name, f.description As Description,  m.quantity As Quantity, m.food_price As Price" _
