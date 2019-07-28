@@ -16,6 +16,7 @@
         lblTotal.Text = totalOrder()
         lblTotalItem.Text = totalItem()
         lblTotalSales.Text = totalSales()
+
     End Sub
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -73,9 +74,24 @@
         clear()
     End Sub
 
+    Private Sub BtnProduct_Click(sender As Object, e As EventArgs) Handles btnProduct.Click
+        btnProduct.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer))
+        btnFreezer.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(175, Byte), Integer), CType(CType(80, Byte), Integer))
 
-    Private Sub BtnChangeDG_Click(sender As Object, e As EventArgs) Handles btnChangeDG.Click
-        datagridChange()
+        btnAddMenu.Text = "ADD (Product)"
+        DGFreezer.Visible = False
+        DGProducts.Visible = True
+        productEnable()
+    End Sub
+
+    Private Sub BtnFreezer_Click(sender As Object, e As EventArgs) Handles btnFreezer.Click
+        btnFreezer.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer))
+        btnProduct.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(175, Byte), Integer), CType(CType(80, Byte), Integer))
+
+        btnAddMenu.Text = "ADD (Freezer)"
+        DGProducts.Visible = False
+        DGFreezer.Visible = True
+        freezerDisable()
     End Sub
 
     Private Sub BtnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
@@ -126,6 +142,19 @@
 
     End Sub
 
+    Private Sub BtnHelp_Click(sender As Object, e As EventArgs) Handles btnHelp.Click
+
+        If btnHome.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer)) Then
+            MessageBox.Show("MENU TABLE - DOUBLE CLICK CELL TO SELECT PRODUCT" & vbCrLf & "ORDER TABLE - DOUBLE CLICK CELL TO CANCEL ORDER")
+        ElseIf btnSettings.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer)) Then
+            MessageBox.Show("MENU TABLE - DOUBLE CLICK CELL TO CANCEL PRODUCT" & vbCrLf & "FREEZER TABLE - DOUBLE CLICK TO REMOVE PRODUCT")
+        ElseIf btnReport.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer)) Then
+            MessageBox.Show("REPORT TABLE - DOUBLE CLICK CELL TO SHOW MORE ORDERS IN THE ORDER_ID")
+        End If
+
+
+    End Sub
+
     Private Sub DGMenu_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGMenu.CellDoubleClick
         Dim queryformenu = ""
         Dim quantity, id As Integer
@@ -141,7 +170,7 @@
 
             End With
 
-            queryformenu = "update menu set quantity = quantity -  quantity  where menu_id = " & cmbMenu.Text & " and food_id = " & id & ""
+            queryformenu = "update menu set quantity = quantity -  quantity  where menu_id = " & cmbMenu.Text & " And food_id = " & id & ""
             SQLProcess(queryformenu)
             addMenu()
         Catch ex As Exception
@@ -466,21 +495,15 @@
     ' -------------------------------  Button Change DataGrid for Prodcuts and Freezer Clicks  ------------------------------
     Sub datagridChange()
 
-        If btnChangeDG.Text = "Products" Then
-            btnChangeDG.Text = "Freezer"
+        If btnProduct.Text = "Products" Then
+            btnProduct.Text = "Freezer"
 
-            btnAddMenu.Text = "ADD (Freezer)"
-            DGProducts.Visible = False
-            DGFreezer.Visible = True
-            freezerDisable()
 
-        ElseIf btnChangeDG.Text = "Freezer" Then
-            btnChangeDG.Text = "Products"
 
-            btnAddMenu.Text = "ADD (Product)"
-            DGFreezer.Visible = False
-            DGProducts.Visible = True
-            productEnable()
+        ElseIf btnProduct.Text = "Freezer" Then
+            btnProduct.Text = "Products"
+
+
 
         End If
     End Sub
@@ -554,7 +577,7 @@
             End With
 
             btnAddProduct.Text = "UPDATE"
-            txtPriceMenu.Enabled = True
+            'txtPriceMenu.Enabled = True
             txtServeMenu.Enabled = True
             btnAddMenu.Enabled = True
             btnCategory.Enabled = False
