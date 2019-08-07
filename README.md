@@ -6,4 +6,5 @@ DATABASE: SQLite
 
 --------------------
 IMPORT bbqpos.sql TO SQLITE BROWSER
+
 OPEN PROJECT USING MVS (2019)
