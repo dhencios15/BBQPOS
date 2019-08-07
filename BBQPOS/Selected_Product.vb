@@ -30,6 +30,10 @@
 
         ElseIf e.KeyChar = Convert.ToChar(Keys.Escape) Then ' When ESCKey press
             Product_Total = 0
+            Product_Name = ""
+            Product_Quantity = 0
+            Product_Price = 0
+
             Me.Close()
         End If
     End Sub

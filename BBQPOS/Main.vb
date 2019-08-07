@@ -23,6 +23,9 @@
         loadToComboBoxMenu("SELECT * FROM menuDate ORDER BY menu_id DESC", cmbMenu)
         lblTransNumber.Text = generateOrderId()
         addMenu()
+        buttonStyle()
+
+
 
     End Sub
 
@@ -31,6 +34,8 @@
     End Sub
 
     Private Sub BtnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+        DGProducts.ClearSelection()
+        DGFreezer.ClearSelection()
         settingSelected()
     End Sub
 
@@ -77,7 +82,9 @@
     Private Sub BtnProduct_Click(sender As Object, e As EventArgs) Handles btnProduct.Click
         btnProduct.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer))
         btnFreezer.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(175, Byte), Integer), CType(CType(80, Byte), Integer))
-
+        DGFreezer.ClearSelection()
+        DGProducts.ClearSelection()
+        btnAddProduct.Text = "ADD"
         btnAddMenu.Text = "ADD (Product)"
         DGFreezer.Visible = False
         DGProducts.Visible = True
@@ -85,9 +92,12 @@
     End Sub
 
     Private Sub BtnFreezer_Click(sender As Object, e As EventArgs) Handles btnFreezer.Click
+
         btnFreezer.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer))
         btnProduct.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(175, Byte), Integer), CType(CType(80, Byte), Integer))
-
+        DGFreezer.ClearSelection()
+        DGProducts.ClearSelection()
+        btnAddProduct.Text = "Remove"
         btnAddMenu.Text = "ADD (Freezer)"
         DGProducts.Visible = False
         DGFreezer.Visible = True
@@ -145,7 +155,7 @@
     Private Sub BtnHelp_Click(sender As Object, e As EventArgs) Handles btnHelp.Click
 
         If btnHome.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer)) Then
-            MessageBox.Show("MENU TABLE - DOUBLE CLICK CELL TO SELECT PRODUCT" & vbCrLf & "ORDER TABLE - DOUBLE CLICK CELL TO CANCEL ORDER")
+            MessageBox.Show("SETTINGS - ADD PRODUCTS TO THE MENU" & vbCrLf & "MENU TABLE - DOUBLE CLICK CELL TO SELECT PRODUCT" & vbCrLf & "ORDER TABLE - DOUBLE CLICK CELL TO CANCEL ORDER")
         ElseIf btnSettings.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer)) Then
             MessageBox.Show("MENU TABLE - DOUBLE CLICK CELL TO CANCEL PRODUCT" & vbCrLf & "FREEZER TABLE - DOUBLE CLICK TO REMOVE PRODUCT")
         ElseIf btnReport.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(243, Byte), Integer)) Then
@@ -203,9 +213,10 @@
                 Product_Price = .Item("Price", i).Value
                 Product_Quantity = .Item("Quantity", i).Value
                 ProductTotal_Quantity = .Item("Quantity", i).Value
-
+                DGMainMenu.ClearSelection()
             End With
         Catch ex As Exception
+            MessageBox.Show("Double Click Error: Main Menu")
         End Try
         Selected_Product.Show()
     End Sub
@@ -304,6 +315,11 @@
                 Reset()
                 displayRecords("SELECT * FROM product_display", DGProducts)
             End If
+        ElseIf btnAddProduct.Text = "Remove" Then
+            Dim queryforFreezer = ""
+            queryforFreezer = "update freezer set quantity = 0 where food_id = " & foodID & ""
+            SQLProcess(queryforFreezer)
+            displayRecords("SELECT * FROM freezer_display WHERE quantity > 0 ORDER BY ID", DGFreezer)
 
         End If
 
@@ -323,11 +339,11 @@
     End Sub
 
     Sub addToCart()
-
         Dim dataSize As Integer = 0
         If DGOrders.Rows.Count = 0 And Product_Name <> "" And Product_Total <> 0 And Product_Quantity <> 0 And Product_Price <> 0 Then
-            DGOrders.Rows.Add(Product_ID, Product_Name, Product_Price, Product_Quantity, Product_Total)
+            DGOrders.Rows.Add(Product_ID, Product_Name, Product_Price, Product_Quantity, Product_Total, "X")
             resetValues()
+            DGOrders.ClearSelection()
         Else
             For Each row As DataGridViewRow In DGOrders.Rows 'Loop through the DataGridView Contents
                 If Not row.IsNewRow Then
@@ -345,11 +361,13 @@
                                 row.Cells(3).Value = totalQuantity
                                 row.Cells(4).Value = CDbl(row.Cells(4).Value) + Product_Total
                                 resetValues()
+                                DGOrders.ClearSelection()
                             End If
                             Exit For
                         ElseIf DGOrders.Rows.Count - 1 = dataSize Then
-                            DGOrders.Rows.Add(Product_ID, Product_Name, Product_Price, Product_Quantity, Product_Total)
+                            DGOrders.Rows.Add(Product_ID, Product_Name, Product_Price, Product_Quantity, Product_Total, "X")
                             resetValues()
+                            DGOrders.ClearSelection()
                             Exit For
                         End If
                     End If
@@ -573,10 +591,12 @@
                 ' Menu Fields
                 txtNameMenu.Text = .Item("Name", i).Value
                 txtPriceMenu.Text = .Item("Price", i).Value
+                txtServeMenu.Text = serve
 
             End With
 
-            btnAddProduct.Text = "UPDATE"
+            btnAddProduct.Text = "Remove"
+            btnAddProduct.Enabled = True
             'txtPriceMenu.Enabled = True
             txtServeMenu.Enabled = True
             btnAddMenu.Enabled = True
@@ -637,13 +657,54 @@
         End If
     End Sub
 
+    Private Sub BtnAddtoCart_Click(sender As Object, e As EventArgs) Handles btnAddtoCart.Click
+        If Product_Name = "" And Product_Total = 0 And Product_Quantity = 0 And Product_Price = 0 Then
+            MessageBox.Show("Please select product first.")
+        Else
+            Selected_Product.Show()
+            DGMainMenu.ClearSelection()
+        End If
 
+    End Sub
+
+    Private Sub DGMainMenu_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGMainMenu.CellClick
+        Try
+            Dim i = e.RowIndex
+            With DGMainMenu
+                Product_ID = .Item("ID", i).Value
+                Product_Name = .Item("Name", i).Value
+                Product_Description = .Item("Description", i).Value
+                Product_Price = .Item("Price", i).Value
+                Product_Quantity = .Item("Quantity", i).Value
+                ProductTotal_Quantity = .Item("Quantity", i).Value
+
+            End With
+        Catch ex As Exception
+            MessageBox.Show("Double Click Error: Main Menu")
+        End Try
+    End Sub
+
+    Private Sub DGOrders_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGOrders.CellContentClick
+        Dim i = e.RowIndex
+        If e.ColumnIndex <> 5 Then
+            Exit Sub
+        Else
+            With DGOrders
+                lblTotal.Text = CDbl(lblTotal.Text) - CDbl(.Item("SubTotal", i).Value)
+            End With
+            DGOrders.Rows.Remove(DGOrders.Rows(i))
+        End If
+    End Sub
 
     Sub addMenu()
         strQuery = "SELECT f.food_id As ID, f.food_name As Name, f.description As Description,  m.quantity As Quantity, m.food_price As Price" _
                      & " FROM menu m LEFT JOIN food f ON m.food_id = f.food_id WHERE m.quantity > 0 AND m.menu_id = " & cmbMenu.Text & " ORDER BY f.food_id"
         displayRecords(strQuery, DGMenu)
         displayRecords(strQuery, DGMainMenu)
+    End Sub
+
+    Private Sub DGMainMenu_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGMainMenu.CellContentClick
+
     End Sub
 
     Sub Logout()
@@ -677,6 +738,10 @@
 
                             End If
                         Next
+                        Product_Total = 0
+                        Product_Name = ""
+                        Product_Quantity = 0
+                        Product_Price = 0
                         Me.Close()
                         Form1.Show()
                     Catch ex As Exception
@@ -689,10 +754,19 @@
 
             End Try
         Else
+            Product_Total = 0
+            Product_Name = ""
+            Product_Quantity = 0
+            Product_Price = 0
             Me.Close()
             Form1.Show()
         End If
 
+
+    End Sub
+
+    Sub buttonStyle()
+        btnCancelOrder.FlatStyle = FlatStyle.Flat
 
     End Sub
 
