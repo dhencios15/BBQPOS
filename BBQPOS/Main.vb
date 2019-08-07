@@ -188,19 +188,19 @@
     End Sub
 
     Private Sub DGFreezer_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGFreezer.CellDoubleClick
-        Dim queryforFreezer = ""
-        Dim id As Integer
-        Try
-            Dim i = e.RowIndex
-            With DGFreezer
-                id = .Item("ID", i).Value
-            End With
+        'Dim queryforFreezer = ""
+        'Dim id As Integer
+        'Try
+        '    Dim i = e.RowIndex
+        '    With DGFreezer
+        '        id = .Item("ID", i).Value
+        '    End With
 
-            queryforFreezer = "update freezer set quantity = 0 where food_id = " & id & ""
-            SQLProcess(queryforFreezer)
-            displayRecords("SELECT * FROM freezer_display WHERE quantity > 0 ORDER BY ID", DGFreezer)
-        Catch ex As Exception
-        End Try
+        '    queryforFreezer = "update freezer set quantity = 0 where food_id = " & id & ""
+        '    SQLProcess(queryforFreezer)
+        '    displayRecords("SELECT * FROM freezer_display WHERE quantity > 0 ORDER BY ID", DGFreezer)
+        'Catch ex As Exception
+        'End Try
     End Sub
 
     Private Sub DGMainMenu_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGMainMenu.CellDoubleClick
@@ -222,11 +222,12 @@
     End Sub
 
     Private Sub DGOrders_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGOrders.CellDoubleClick
-        Dim i = e.RowIndex
-        With DGOrders
-            lblTotal.Text = CDbl(lblTotal.Text) - CDbl(.Item("SubTotal", i).Value)
-        End With
-        DGOrders.Rows.Remove(DGOrders.Rows(i))
+        'Dim i = e.RowIndex
+        'With DGOrders
+        '    lblTotal.Text = CDbl(lblTotal.Text) - CDbl(.Item("SubTotal", i).Value)
+        'End With
+        'DGOrders.Rows.Remove(DGOrders.Rows(i))
+        'lblTotalItem.Text = totalItem()
     End Sub
 
     Private Sub DateTime_Tick(sender As Object, e As EventArgs) Handles DateTime.Tick
@@ -693,6 +694,7 @@
                 lblTotal.Text = CDbl(lblTotal.Text) - CDbl(.Item("SubTotal", i).Value)
             End With
             DGOrders.Rows.Remove(DGOrders.Rows(i))
+            lblTotalItem.Text = totalItem()
         End If
     End Sub
 
