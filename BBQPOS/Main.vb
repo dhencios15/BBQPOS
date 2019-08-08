@@ -204,6 +204,8 @@
     End Sub
 
     Private Sub DGMainMenu_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGMainMenu.CellDoubleClick
+        resetValues()
+
         Try
             Dim i = e.RowIndex
             With DGMainMenu
@@ -218,7 +220,7 @@
         Catch ex As Exception
             MessageBox.Show("Double Click Error: Main Menu")
         End Try
-        Selected_Product.Show()
+        Selected_Product.ShowDialog()
     End Sub
 
     Private Sub DGOrders_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGOrders.CellDoubleClick
@@ -358,6 +360,7 @@
                             Dim totalQuantity As Integer = Product_Quantity + row.Cells(3).Value
                             If ProductTotal_Quantity < totalQuantity Then
                                 row.Cells(3).Value = ProductTotal_Quantity
+
                             Else
                                 row.Cells(3).Value = totalQuantity
                                 row.Cells(4).Value = CDbl(row.Cells(4).Value) + Product_Total
@@ -662,7 +665,7 @@
         If Product_Name = "" And Product_Total = 0 And Product_Quantity = 0 And Product_Price = 0 Then
             MessageBox.Show("Please select product first.")
         Else
-            Selected_Product.Show()
+            Selected_Product.ShowDialog()
             DGMainMenu.ClearSelection()
         End If
 

@@ -1,6 +1,7 @@
 ﻿Public Class Payment
     Private Sub Payment_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lblPayment.Text = Product_Total
+        txtPayment.Text = 0
     End Sub
     Private Sub txtCategory_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtPayment.KeyPress
         If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then

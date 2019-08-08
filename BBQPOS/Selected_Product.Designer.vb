@@ -34,6 +34,7 @@ Partial Class Selected_Product
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.btnClose = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -160,12 +161,26 @@ Partial Class Selected_Product
         Me.Label2.TabIndex = 16
         Me.Label2.Text = "Name"
         '
+        'btnClose
+        '
+        Me.btnClose.BackColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.btnClose.Cursor = System.Windows.Forms.Cursors.Default
+        Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnClose.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnClose.Location = New System.Drawing.Point(341, 0)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(28, 23)
+        Me.btnClose.TabIndex = 27
+        Me.btnClose.Text = "X"
+        Me.btnClose.UseVisualStyleBackColor = False
+        '
         'Selected_Product
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(62, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(368, 358)
+        Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnOk)
         Me.Controls.Add(Me.Label7)
@@ -199,4 +214,5 @@ Partial Class Selected_Product
     Friend WithEvents Label3 As Label
     Friend WithEvents txtName As TextBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents btnClose As Button
 End Class
